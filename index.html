@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Maze Generation Algorithms</title>
+  <script src="./src/main.js"></script>
+  <script src="./src/entities/block.js"></script>
+  <script src="./src/algorithms/depth-first.js"></script>
+  <script src="./src/algorithms/recursive-backtracker.js"></script>
+  <script src="./src/algorithms/randomized-kruskal.js"></script>
+  <script src="./src/algorithms/randomized-prim.js"></script>
+  <script src="./src/algorithms/recursive-division.js"></script>
+  <style>
+    * {
+      font-size: 24px;
+    }
+    canvas {
+      float: left;
+      margin-right: 40px;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <form id="form">
+    Algorithm
+    <select id="algorithm">
+      <option value="recursive-backtracker">Recursive Backtracker</option>
+      <option value="depth-first" disabled>Depth-first Search</option>
+      <option value="randomized-kruskal" disabled>Randomized Kruskal's Algorithm</option>
+      <option value="randomized-prim" disabled>Randomized Prim's Algorithm</option>
+      <option value="recursive-division" disabled>Recursive Division</option>
+    </select>
+    <br>
+    <br>
+    Block size
+    <input id="blockSize" type="number" min="10" max="100" value="40">
+    <br>
+    <br>
+    <button type="submit">Start</button>
+  </form>
+</body>
+</html>
