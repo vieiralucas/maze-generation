@@ -1,4 +1,4 @@
-const recursiveBacktracker = (blockSize = 40) => {
+const recursiveBacktracker = (blockSize = 40, hurry = false) => {
   const blocks = [];
   const stack = [];
 
@@ -74,11 +74,22 @@ const recursiveBacktracker = (blockSize = 40) => {
       return;
     }
 
-    draw();
-    window.requestAnimationFrame(update);
+    if (!hurry) {
+      draw();
+      window.requestAnimationFrame(update);
+    }
   };
 
   draw();
   update();
+  if (hurry) {
+    update();
+    while(stack.length > 0) {
+      update();
+    }
+
+    draw();
+    current.draw(ctx, 'black');
+  }
 }
 

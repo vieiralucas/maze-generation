@@ -1,6 +1,5 @@
-const WIDTH = 400;
-const HEIGHT = 400;
-
+let WIDTH = 400;
+let HEIGHT = 400;
 let canvas;
 let ctx;
 let animationFrame;
@@ -9,21 +8,27 @@ const onSubmit = e => {
   e.preventDefault();
   const algorithm = document.getElementById('algorithm').value;
   const blockSize = document.getElementById('blockSize').value;
+  const hurryUp = document.getElementById('hurryUp').checked;
+  WIDTH = document.getElementById('canvasWidth').value;
+  HEIGHT = document.getElementById('canvasHeight').value;
 
-  start(algorithm, blockSize);
+  console.log(hurryUp);
+  canvas.width = WIDTH;
+  canvas.height = HEIGHT;
+  start(algorithm, blockSize, hurryUp);
 };
 
 const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const start = (algorithm, blockSize) => {
+const start = (algorithm, blockSize, hurry) => {
   switch(algorithm) {
     case 'depth-first':
       depthFirst(blockSize);
       break;
     case 'recursive-backtracker':
-      recursiveBacktracker(blockSize);
+      recursiveBacktracker(blockSize, hurry);
       break;
     case 'randomized-kruskal':
       randomizedKruskal(blockSize);
