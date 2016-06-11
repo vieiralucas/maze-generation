@@ -63,11 +63,9 @@ const recursiveBacktracker = (blockSize = 40, hurry = false) => {
 
   draw();
   if (hurry) {
-    while(board.hasUnvisited()) {
+    do {
       update();
-    }
-    stack.length = 0;
-    board.draw(ctx);
+    } while(board.hasUnvisited());
   } else {
     update();
   }
