@@ -1,28 +1,4 @@
 const recursiveBacktracker = (blockSize = 40, hurry = false) => {
-  const blocks = [];
-  const stack = [];
-
-  const draw = () => {
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, WIDTH, HEIGHT);
-    blocks.forEach(b => b.draw(ctx));
-    current.draw(ctx, 'violet');
-    stack.forEach(s => s.draw(ctx, 'blue'));
-  };
-  const hasUnvisited = () => {
-    return blocks.filter(b => !b.visited).length > 0;
-  };
-  const getByXY = (x, y) => {
-    return blocks.filter(b => b.posX === x && b.posY === y)[0];
-  };
-  const getUnvisitedNeighbours = block => {
-    return [
-      getByXY(block.posX + 1, block.posY),
-      getByXY(block.posX - 1, block.posY),
-      getByXY(block.posX, block.posY + 1),
-      getByXY(block.posX, block.posY - 1)
-    ].filter(b => b !== undefined && !b.visited);
-  };
   const removeWallsBetween = (a, b) => {
     if (a.posY === b.posY) {
       if (a.posX - b.posX > 0) {
@@ -47,49 +23,53 @@ const recursiveBacktracker = (blockSize = 40, hurry = false) => {
     }
   };
 
-  for (let x = 0; x < WIDTH / blockSize; x++) {
-    for (let y = 0; y < HEIGHT / blockSize; y++) {
-      blocks.push(new Block(x, y, blockSize));
-    }
-  }
-
-  let current = blocks[0];
-  current.visited = true;
+  const draw = () => {
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, WIDTH, HEIGHT);
+    board.draw(ctx);
+    current.draw(ctx, 'violet');
+    stack.forEach(s => s.draw(ctx, 'blue'));
+  };
 
   const update = () => {
-    const neighbours = getUnvisitedNeighbours(current);
-    if (neighbours.length > 0) {
-      stack.push(current);
-      const nextCurrent = neighbours[getRandomInt(0, neighbours.length)];
-      removeWallsBetween(current, nextCurrent);
-      current = nextCurrent;
-      current.visited = true;
-    } else if (stack.length > 0) {
-      current = stack.pop();
-    }
+    if (board.hasUnvisited()) {
+      const unvisitedNeighbours = board.getNeighbours(current)
+        .filter(n => !n.visited);
 
-    if (stack.length === 0) {
-      draw();
-      current.draw(ctx, 'black');
-      return;
-    }
+      if (unvisitedNeighbours.length > 0) {
+        stack.push(current);
+        const nextCurrent = unvisitedNeighbours[getRandomInt(0, unvisitedNeighbours.length)];
+        removeWallsBetween(current, nextCurrent);
+        current = nextCurrent;
+        board.setVisited(current);
+        current.visited = true;
+      } else if (stack.length > 0) {
+        current = stack.pop();
+      }
 
-    if (!hurry) {
-      draw();
-      window.requestAnimationFrame(update);
+      if (!hurry) {
+        draw();
+        requestAnimationFrame(update);
+      }
+    } else {
+      board.draw(ctx);
     }
   };
 
+  const board = new Board(WIDTH, HEIGHT, WIDTH / blockSize, HEIGHT / blockSize);
+  const stack = [];
+  let current = board.getBlock(0, 0);
+  board.setVisited(current);
+
   draw();
-  update();
   if (hurry) {
-    update();
-    while(stack.length > 0) {
+    while(board.hasUnvisited()) {
       update();
     }
-
-    draw();
-    current.draw(ctx, 'black');
+    stack.length = 0;
+    board.draw(ctx);
+  } else {
+    update();
   }
-}
+};
 

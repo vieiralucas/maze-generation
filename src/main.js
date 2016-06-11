@@ -9,10 +9,9 @@ const onSubmit = e => {
   const algorithm = document.getElementById('algorithm').value;
   const blockSize = document.getElementById('blockSize').value;
   const hurryUp = document.getElementById('hurryUp').checked;
-  WIDTH = document.getElementById('canvasWidth').value;
-  HEIGHT = document.getElementById('canvasHeight').value;
+  WIDTH = Number(document.getElementById('canvasWidth').value);
+  HEIGHT = Number(document.getElementById('canvasHeight').value);
 
-  console.log(hurryUp);
   canvas.width = WIDTH;
   canvas.height = HEIGHT;
   start(algorithm, blockSize, hurryUp);
