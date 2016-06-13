@@ -18,7 +18,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "bundle": "webpack --progress --colors",
-    "watch": "webpack-dev-server --progress --colors"
+    "watch": "webpack-dev-server --progress --colors",
+    "deploy": "./deploy.sh"
   },
   "repository": {
     "type": "git",
