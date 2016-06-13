@@ -1,4 +1,12 @@
-const recursiveBacktracker = (blockSize = 40, hurry = false) => {
+import Board from '../entities/board';
+import {getRandomInt} from '../utils/math';
+import globals from '../utils/globals';
+
+export default (blockSize = 40, hurry = false) => {
+  const WIDTH = globals.getWidth();
+  const HEIGHT = globals.getHeight();
+  const ctx = globals.getCtx();
+
   const removeWallsBetween = (a, b) => {
     if (a.posY === b.posY) {
       if (a.posX - b.posX > 0) {

@@ -1,4 +1,4 @@
-class Block {
+export default class Block {
   constructor(x, y, w, h) {
     this.posX = x;
     this.posY = y;

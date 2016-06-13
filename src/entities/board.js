@@ -1,4 +1,6 @@
-class Board {
+import Block from './block';
+
+export default class Board {
   constructor(w, h, xBlocks, yBlocks) {
     this.w = w;
     this.h = h;

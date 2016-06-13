@@ -1,25 +1,16 @@
-let WIDTH = 400;
-let HEIGHT = 400;
-let canvas;
-let ctx;
-let animationFrame;
+import recursiveBacktracker from './algorithms/recursive-backtracker';
+import globals from './utils/globals';
 
 const onSubmit = e => {
   e.preventDefault();
   const algorithm = document.getElementById('algorithm').value;
   const blockSize = document.getElementById('blockSize').value;
   const hurryUp = document.getElementById('hurryUp').checked;
-  WIDTH = Number(document.getElementById('canvasWidth').value);
-  HEIGHT = Number(document.getElementById('canvasHeight').value);
+  globals.setWidth(Number(document.getElementById('canvasWidth').value))
+  globals.setHeight(Number(document.getElementById('canvasHeight').value))
 
-  canvas.width = WIDTH;
-  canvas.height = HEIGHT;
   start(algorithm, blockSize, hurryUp);
 };
-
-const getRandomInt = (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
 
 const start = (algorithm, blockSize, hurry) => {
   switch(algorithm) {
@@ -41,14 +32,9 @@ const start = (algorithm, blockSize, hurry) => {
   }
 };
 
-window.onload = function() {
-  canvas = document.getElementById('canvas');
-  canvas.width = WIDTH;
-  canvas.height = HEIGHT;
-  ctx = canvas.getContext('2d');
-  ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
+window.onload = () => {
   const form = document.getElementById('form');
   form.addEventListener('submit', onSubmit);
+  globals.start();
 }
 
